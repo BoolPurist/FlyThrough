@@ -15,6 +15,7 @@ namespace FlyThrough.Tools {
     private int _numberOfSpawns = 1;
     private GameObject _parentToSpawnIn;
     private float _offset = 0f;
+    private bool _spawnPrefabs = false;
     #endregion
 
     #region internal facts
@@ -62,6 +63,7 @@ namespace FlyThrough.Tools {
 
       _parentToSpawnIn = (GameObject)EditorGUILayout.ObjectField("Parent to spawn in", _parentToSpawnIn, typeof(GameObject), true);
       _offset = EditorGUILayout.FloatField("Offset from origin", _offset);
+      _spawnPrefabs = EditorGUILayout.Toggle("With prefab connection", _spawnPrefabs);
 
       GameObject selectedObject = Selection.activeGameObject;
 
@@ -103,7 +105,14 @@ namespace FlyThrough.Tools {
         }        
         else if (GUILayout.Button("Create"))
         {
-          SnapSpawnController.SpawnCommand(_objectToSpawn, _offset, _numberOfSpawns, _spawnDirection, _parentToSpawnIn);          
+          if (!_spawnPrefabs)
+          {
+            SnapSpawnController.SpawnCommand(_objectToSpawn, _offset, _numberOfSpawns, _spawnDirection, _parentToSpawnIn);
+          }
+          else
+          {
+            SnapSpawnController.SpawnCommandPrefab(_objectToSpawn, _offset, _spawnDirection, _parentToSpawnIn);
+          }
         }
           
       }

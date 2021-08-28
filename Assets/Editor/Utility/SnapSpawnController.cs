@@ -51,7 +51,8 @@ namespace FlyThrough.Tools
 
     public static void SelectLastItemCommand()
     {
-      if (HasHistory)
+      if (HasHistory)        
+      {
         for (int i = 0; i < _spawningHistroy.Count; i++)
         {
           GameObject[] _pastSpawn = _spawningHistroy[i].SpawnedObjects;
@@ -67,9 +68,30 @@ namespace FlyThrough.Tools
 
           }
         }
-      { 
       }
     }
+
+    public static void SpawnCommandPrefab(GameObject objectForPrefab, float offset, SpawnDirection spawnDirection, GameObject parentToSpawn = null)
+    {
+      GameObject spawnedPrefab = PrefabUtility.InstantiatePrefab(objectForPrefab) as GameObject;
+      if (spawnedPrefab != null)
+      {
+        Transform transformForPrefab = SnapSpawner.GetOnlyTransformFromNotSpawnedObj(
+          objectForPrefab, 
+          Selection.activeGameObject, 
+          offset, 
+          spawnDirection).transform;
+
+        spawnedPrefab.transform.SetPositionAndRotation(transformForPrefab.position, transformForPrefab.rotation);
+        if (parentToSpawn != null)
+        {
+          spawnedPrefab.transform.SetParent(parentToSpawn.transform);
+        }
+
+        _spawningHistroy.Add(new SnapSpawnMomentum(new GameObject[] { spawnedPrefab }));
+      }
+    }
+
   }
 
 }

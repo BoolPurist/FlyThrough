@@ -29,7 +29,7 @@
 *.dae                binary
 *.dxf                binary
 *.FBX                binary
-*.fbx filter=lfs diff=lfs merge=lfs -text
+*.fbx                binary
 *.jas                binary
 *.lws                binary
 *.lxo                binary
