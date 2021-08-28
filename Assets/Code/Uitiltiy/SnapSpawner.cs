@@ -96,7 +96,7 @@ namespace FlyThrough
         case SpawnDirection.Front:
           distanceToCenterOfSpawn = originExtends.z + spawnExtends.z;
           direction = Vector3.forward;
-          offset = new Vector3(0f, 0f, directionOffset);
+          offset = new Vector3(0f, 0f, directionOffset);          
           break;
         case SpawnDirection.Back:
           distanceToCenterOfSpawn = originExtends.z + spawnExtends.z;
@@ -126,8 +126,8 @@ namespace FlyThrough
 
       }
       
-      Vector3 finaPosition = origin.transform.position + (direction * distanceToCenterOfSpawn) + offset;
-      return new TranformationForLaterSpawning(finaPosition, origin.transform.rotation);
+      Vector3 finaPosition = origin.transform.position + (direction * distanceToCenterOfSpawn) + offset;      
+      return new TranformationForLaterSpawning(finaPosition, origin.transform.rotation);      
     }
 
   }
