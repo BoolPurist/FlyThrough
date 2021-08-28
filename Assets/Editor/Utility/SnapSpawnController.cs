@@ -71,25 +71,65 @@ namespace FlyThrough.Tools
       }
     }
 
-    public static void SpawnCommandPrefab(GameObject objectForPrefab, float offset, SpawnDirection spawnDirection, GameObject parentToSpawn = null)
+    private static GameObject SpawnCommandPrefab(GameObject objectForPrefab, float offset, SpawnDirection spawnDirection, GameObject parentToSpawn = null, GameObject origin = null)
     {
       GameObject spawnedPrefab = PrefabUtility.InstantiatePrefab(objectForPrefab) as GameObject;
       if (spawnedPrefab != null)
       {
-        Transform transformForPrefab = SnapSpawner.GetOnlyTransformFromNotSpawnedObj(
-          objectForPrefab, 
-          Selection.activeGameObject, 
+        TranformationForLaterSpawning transformForPrefab = SnapSpawner.CreateEmptyObjectForLaterSnapSpawn(
+          objectForPrefab,
+          origin != null ? origin : Selection.activeGameObject, 
           offset, 
-          spawnDirection).transform;
+          spawnDirection
+          );
 
-        spawnedPrefab.transform.SetPositionAndRotation(transformForPrefab.position, transformForPrefab.rotation);
+        spawnedPrefab.transform.SetPositionAndRotation(transformForPrefab.Position, transformForPrefab.Rotation);
         if (parentToSpawn != null)
         {
           spawnedPrefab.transform.SetParent(parentToSpawn.transform);
-        }
-
-        _spawningHistroy.Add(new SnapSpawnMomentum(new GameObject[] { spawnedPrefab }));
+        }        
       }
+
+      
+      return spawnedPrefab;
+    }
+
+    public static void SpawnCommandPrefab(
+      GameObject objectForPrefab, 
+      float offset, 
+      int numberOfSpawns, 
+      SpawnDirection spawnDirection, 
+      GameObject 
+      parentToSpawn = null
+      )
+    {
+      GameObject[] _spawnedPrefabs = new GameObject[numberOfSpawns];
+      GameObject lastSpawnedPrefab = SpawnCommandPrefab(
+        objectForPrefab, 
+        offset, 
+        spawnDirection, 
+        parentToSpawn
+        );
+
+      _spawnedPrefabs[0] = lastSpawnedPrefab;
+      
+      for (int i = 1; i < _spawnedPrefabs.Length; i++)
+      {
+        
+        lastSpawnedPrefab = SpawnCommandPrefab(
+          objectForPrefab, 
+          offset, 
+          spawnDirection, 
+          parentToSpawn,
+          lastSpawnedPrefab
+          );
+
+        
+        _spawnedPrefabs[i] = lastSpawnedPrefab;
+
+      }
+
+      _spawningHistroy.Add(new SnapSpawnMomentum(_spawnedPrefabs));
     }
 
   }

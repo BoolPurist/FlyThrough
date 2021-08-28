@@ -6,6 +6,18 @@ namespace FlyThrough
 {
   public enum SpawnDirection { Front, Back, Left, Right, Up, Down }
 
+  public class TranformationForLaterSpawning
+  {
+    public Vector3 Position { get; private set; }
+    public Quaternion Rotation { get; private set; }
+
+    public TranformationForLaterSpawning(Vector3 position, Quaternion rotation)
+    {
+      Position = position;
+      Rotation = rotation; 
+    }
+  }
+
   public static class SnapSpawner
   {
     public static GameObject[] SpawnAdjacantObject(
@@ -42,7 +54,7 @@ namespace FlyThrough
 
       GameObject SpawnOneObject(GameObject nextOrigin)
       {
-        GameObject emptyObj = GetOnlyTransformFromNotSpawnedObj( 
+        TranformationForLaterSpawning transformationForSpawn = CreateEmptyObjectForLaterSnapSpawn( 
           prefabToSpawnm,
           nextOrigin,
           directionOffset,          
@@ -51,8 +63,8 @@ namespace FlyThrough
 
         GameObject spawnedObject = GameObject.Instantiate(
             prefabToSpawnm,
-            emptyObj.transform.position,
-            emptyObj.transform.rotation
+            transformationForSpawn.Position,
+            transformationForSpawn.Rotation
           );
 
         return spawnedObject;
@@ -61,14 +73,13 @@ namespace FlyThrough
       
     }
 
-    public static GameObject GetOnlyTransformFromNotSpawnedObj(
+    public static TranformationForLaterSpawning CreateEmptyObjectForLaterSnapSpawn(
       GameObject prefabToSpawnm,
       GameObject origin,
       float directionOffset,      
       SpawnDirection spawnDirectionFromOrigin = SpawnDirection.Front
       )
-    {
-      var emptyObj = new GameObject();
+    {      
       float distanceToCenterOfSpawn = 0f;
 
       var originRenderer = origin.GetComponent<MeshRenderer>();
@@ -114,11 +125,9 @@ namespace FlyThrough
           break;
 
       }
-
-      emptyObj.transform.SetPositionAndRotation(origin.transform.position, origin.transform.rotation);
-      emptyObj.transform.position += (direction * distanceToCenterOfSpawn) + offset;
-
-      return emptyObj;
+      
+      Vector3 finaPosition = origin.transform.position + (direction * distanceToCenterOfSpawn) + offset;
+      return new TranformationForLaterSpawning(finaPosition, origin.transform.rotation);
     }
 
   }

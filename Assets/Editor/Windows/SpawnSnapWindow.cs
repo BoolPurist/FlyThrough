@@ -111,7 +111,7 @@ namespace FlyThrough.Tools {
           }
           else
           {
-            SnapSpawnController.SpawnCommandPrefab(_objectToSpawn, _offset, _spawnDirection, _parentToSpawnIn);
+            SnapSpawnController.SpawnCommandPrefab(_objectToSpawn, _offset, _numberOfSpawns, _spawnDirection, _parentToSpawnIn);
           }
         }
           
