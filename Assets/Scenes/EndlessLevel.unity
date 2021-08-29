@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 9d5fe8cf432150742ab403c222123ffe,
+  m_LightingDataAsset: {fileID: 112000000, guid: 10bbaa604929c5e4d944d80dfc97b422,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -210,7 +210,7 @@ PrefabInstance:
     - target: {fileID: 6626139177869575590, guid: 9e240e1c46e8a55499bd43991585229f,
         type: 3}
       propertyPath: _noObstaclePattern
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6626139177869575590, guid: 9e240e1c46e8a55499bd43991585229f,
         type: 3}
@@ -233,6 +233,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LevelManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6626139177869575591, guid: 9e240e1c46e8a55499bd43991585229f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e240e1c46e8a55499bd43991585229f, type: 3}
@@ -462,6 +467,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3339347999162756474, guid: 309c78f59bd8db7418c9b453dd9187d8,
         type: 3}
+      propertyPath: Speed
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 3339347999162756474, guid: 309c78f59bd8db7418c9b453dd9187d8,
+        type: 3}
       propertyPath: _manuelControl
       value: 0
       objectReference: {fileID: 0}
@@ -489,6 +499,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 268916415, guid: 454f35d6ac994114bbbcb1050d4710cc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 268916416, guid: 454f35d6ac994114bbbcb1050d4710cc, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -498,6 +512,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 4708958543320039567, guid: 454f35d6ac994114bbbcb1050d4710cc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4708958543320039794, guid: 454f35d6ac994114bbbcb1050d4710cc,
         type: 3}
       propertyPath: m_RootOrder
@@ -506,17 +525,17 @@ PrefabInstance:
     - target: {fileID: 4708958543320039794, guid: 454f35d6ac994114bbbcb1050d4710cc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 394
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4708958543320039794, guid: 454f35d6ac994114bbbcb1050d4710cc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -88
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4708958543320039794, guid: 454f35d6ac994114bbbcb1050d4710cc,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -182
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4708958543320039794, guid: 454f35d6ac994114bbbcb1050d4710cc,
         type: 3}
@@ -552,6 +571,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4708958543320039795, guid: 454f35d6ac994114bbbcb1050d4710cc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4708958543320039795, guid: 454f35d6ac994114bbbcb1050d4710cc,
         type: 3}
