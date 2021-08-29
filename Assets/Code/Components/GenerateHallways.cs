@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,67 +7,107 @@ namespace FlyThrough
 {
   public class GenerateHallways : MonoBehaviour
   {
+    private const int COLLIDER_TRIGGER_FORGOINGBACK_INDEX = 1;
+    
+    [Header("Required")]
+    [SerializeField]  
+    [Tooltip("Object, which is spawn for every 2. object")]
+    private GameObject _emptyHallway;
     [SerializeField]
-    [Min(2)]
+    [Tooltip("Collider zone to for the player trigger reset of all objects to origin")]
+    private GameObject _colliderTiggerReset;
+    [SerializeField]
+    [Min(0)]
+    [Tooltip("Number of objects which are present at max")]
     private int _numberOfObjects = 10;
+    [Header("Optional")]
+    [SerializeField]
+    private Transform _startLocation;
 
-    [SerializeField]
-    private GameObject _hallway;
-    [SerializeField]
-    private Transform _startHead;
-    [SerializeField]
-    private GameObject _colliderToNextChunk;
-
-    private Vector3 _startHeadLocation;
-    private const int CHUNCK_CHANGE_INDEX = 1;
+    private Vector3 _startPosition;
 
 #pragma warning disable IDE0090 // Use 'new(...)'
+    // All current spawned objects which make up a linear hallway level.
     private readonly List<GameObject> _currentHallways = new List<GameObject>();
 #pragma warning restore IDE0090 // Use 'new(...)'
+
+    private void ValidateObjectBlueprintsToSpawn()
+    {     
+      if (_emptyHallway == null || _emptyHallway.GetComponent<Renderer>() == null)
+      {
+        ErrorMessage(nameof(_emptyHallway), typeof(Renderer).Name);
+      }      
+      else if (_colliderTiggerReset == null || _colliderTiggerReset.GetComponent<Collider>() == null)
+      {
+        ErrorMessage(nameof(_colliderTiggerReset), typeof(Collider).Name);
+      }
+
+      static void ErrorMessage(string nameOfParameter, string nameOfNeededComponent)
+        => Debug.LogError($"{nameOfParameter} must be provided with a component derived from {nameOfNeededComponent}");
+    }
 
     // Start is called before the first frame update
     private void Start()
     {
-      _startHeadLocation = _startHead == null ? Vector3.zero : _startHead.position;
-      GameObject firstHallway = GameObject.Instantiate<GameObject>(_hallway, transform);
-      firstHallway.transform.position = _startHeadLocation;
-      _currentHallways.Add(firstHallway);
+      ValidateObjectBlueprintsToSpawn();
+      SpawnAndPlaceStartObj();
+      SpawnFromSecondToLastPresentObj();
+      AddColliderTriggerForGoingBack();
 
-      for (int i = 1; i < _numberOfObjects; i++)
+      void SpawnAndPlaceStartObj()
       {
-        AddHallWay(_currentHallways[i - 1]);
+        _startPosition = _startLocation == null ? Vector3.zero : _startLocation.position;
+        GameObject firstHallway = GameObject.Instantiate<GameObject>(_emptyHallway, transform);
+        firstHallway.transform.position = _startPosition;
+
+        _currentHallways.Add(firstHallway);
       }
 
-      _colliderToNextChunk = GameObject.Instantiate<GameObject>(_colliderToNextChunk, transform);
-      _colliderToNextChunk.transform.position = _currentHallways[CHUNCK_CHANGE_INDEX].transform.position;
-      _colliderToNextChunk.GetComponent<TriggerNextChunk>().OnNextChunk += UpdateHallways;
+      void AddColliderTriggerForGoingBack()
+      {
+        _colliderTiggerReset = GameObject.Instantiate<GameObject>(_colliderTiggerReset, transform);
+        _colliderTiggerReset.transform.position =
+          _currentHallways[COLLIDER_TRIGGER_FORGOINGBACK_INDEX].transform.position;
+        _colliderTiggerReset.GetComponent<TriggerNextChunk>().OnNextChunk += DestroyHeadAndSpawnNewTail;
+      }
+
+      void SpawnFromSecondToLastPresentObj()
+      {
+        for (int i = 1; i < _numberOfObjects; i++)
+        {
+          AddHallWay(_currentHallways[i - 1]);
+        }
+      }
+
     }
 
-    public void AddHallWay(GameObject origin)
+    private void AddHallWay(GameObject origin)
     {
-      GameObject nextHallway = SnapSpawner.SpawnAdjacantObject(_hallway, origin, SpawnDirection.Front);
+      GameObject nextHallway = GameObject.Instantiate<GameObject>(_emptyHallway, transform);
+      SnapMover.MoveSnap(origin, nextHallway, PlaceSnapDirection.Front);
+      
       _currentHallways.Add(nextHallway);
       nextHallway.transform.SetParent(transform);
     }
 
-    public void UpdateHallways()
+    public void DestroyHeadAndSpawnNewTail()
     {
       Destroy(_currentHallways[0]);
       _currentHallways.RemoveAt(0);
       AddHallWay(_currentHallways[_currentHallways.Count - 1]);
-      _colliderToNextChunk.transform.position = _currentHallways[CHUNCK_CHANGE_INDEX].transform.position;
+      _colliderTiggerReset.transform.position = _currentHallways[COLLIDER_TRIGGER_FORGOINGBACK_INDEX].transform.position;
     }
 
-    public void ResetHallwaysWorldOrigin()
+    public void ResetObjectsBackToStartLocation()
     {
-      _startHead.position = Vector3.zero;
+      _startLocation.position = Vector3.zero;
       Transform headHallwayTrans = _currentHallways[0].transform;
       for (int i = 1; i < _currentHallways.Count; i++)
       {
         _currentHallways[i].transform.SetParent(headHallwayTrans);
       }
 
-      _colliderToNextChunk.transform.SetParent(headHallwayTrans);
+      _colliderTiggerReset.transform.SetParent(headHallwayTrans);
 
       headHallwayTrans.position = Vector3.zero;
 
@@ -75,7 +116,7 @@ namespace FlyThrough
         hallway.transform.SetParent(transform);
       }
 
-      _colliderToNextChunk.transform.SetParent(transform);
+      _colliderTiggerReset.transform.SetParent(transform);
     }
   }
 

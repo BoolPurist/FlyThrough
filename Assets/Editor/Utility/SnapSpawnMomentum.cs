@@ -7,8 +7,14 @@ using UnityEngine;
 
 namespace FlyThrough.Tools
 {
+  /// <summary>
+  /// Represents a state for the SnapSpawnController. Used to revert spawn results.
+  /// </summary>
   public class SnapSpawnMomentum
   {
+    /// <summary>
+    /// All objects from one spawn, call of SnapSpawnCommand in the class SnapSpawnController
+    /// </summary>
     public GameObject[] SpawnedObjects { get; private set; }    
 
 

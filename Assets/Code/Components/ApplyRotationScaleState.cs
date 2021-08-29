@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FlyThrough
 {
-  [ExecuteAlways]
+  [ExecuteInEditMode]
   /// <summary>
   /// Object gets scaled/rotated whenever it placed in a scene or spawned runtime.
   /// with direct values in combination with an offset.
