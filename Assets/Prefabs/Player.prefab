@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6178dd8b656bd9240b288cc1fe55fd2c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -170,13 +170,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 500
   TravelDistanceThreshold: 500
-  _manuelControl: 0
+  _manuelControl: 1
   SpeedAfterDeath: 10
   OnTraveledThreshold:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: ResetHallwaysWorldOrigin
+        m_MethodName: ResetObjectsBackToStartLocation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -198,11 +198,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3ff921fdd7683488a6622d3bcc6a87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ignoreDeath: 1
+  _ignoreDeath: 0
   _timeAfterDeath: 2
   OnPlayerDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: ReactToGameOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnPlayerVictory:
     m_PersistentCalls:
       m_Calls: []

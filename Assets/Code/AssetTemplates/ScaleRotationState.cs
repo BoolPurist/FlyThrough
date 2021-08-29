@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace FlyThrough
 {
-  [CreateAssetMenu(fileName = "new transformation configuration", menuName = "Transformation State")]
+  [CreateAssetMenu(fileName = "new transformation configuration", menuName = "Data/Transformation State")]
   /// <summary>
   /// Template to create configuration for start rotation and scaling 
   /// used in the component ApplyRotationScaleState to give object desired

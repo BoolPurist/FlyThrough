@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,8 +10,11 @@ namespace FlyThrough
   public enum RotaionStep { One, Two, Three }
 
   [ExecuteInEditMode]
+  [RequireComponent(typeof(Renderer))]
   public class RotateBy90Degree : MonoBehaviour
   {
+
+    private const int MAX_RANDOM_NEXT = 4;
 
 #pragma warning disable IDE0066
 
@@ -62,9 +66,29 @@ namespace FlyThrough
     private RotateDirection _rotateDirection = RotateDirection.Forward;  
     [SerializeField]
     private RotaionStep _rotationStep = RotaionStep.One;
-  
+
+#pragma warning disable IDE0090 // Use 'new(...)'
+    private readonly System.Random _randomGenerator = new System.Random();
+#pragma warning restore IDE0090 // Use 'new(...)'
+
+    public RotateDirection Direction
+    {
+      get => _rotateDirection;
+      set => _rotateDirection = value;
+    }
+
+    public RotaionStep RotaionStep
+    {
+      get => _rotationStep;
+      set => _rotationStep = value;
+    }
+
+    private int RandomRotationAmount => _randomGenerator.Next(0, MAX_RANDOM_NEXT) * 90;
+
     [ContextMenu("Rotate")]
-    public void Rotate() => transform.RotateAround(GetComponent<MeshRenderer>().bounds.center, RotationAxis, RoationAmount);
+    public void Rotate() => transform.RotateAround(transform.position, RotationAxis, RoationAmount);
+    [ContextMenu("Random steps in rotation")]
+    public void RotateRandomSteps() => transform.RotateAround(transform.position, RotationAxis, RandomRotationAmount);
 
     }
 }

@@ -5,26 +5,38 @@ using UnityEngine;
 
 namespace FlyThrough
 {
+  [RequireComponent(typeof(PrefabFromResourceProvider))]
   public class GenerateHallways : MonoBehaviour
   {
-    private const int COLLIDER_TRIGGER_FORGOINGBACK_INDEX = 1;
+    private const int COLLIDER_TRIGGER_FORGOINGBACK_INDEX = 3;
     
     [Header("Required")]
     [SerializeField]  
     [Tooltip("Object, which is spawn for every 2. object")]
     private GameObject _emptyHallway;
     [SerializeField]
+    private GameObject _obstacle;
+    [SerializeField]
     [Tooltip("Collider zone to for the player trigger reset of all objects to origin")]
     private GameObject _colliderTiggerReset;
-    [SerializeField]
-    [Min(0)]
-    [Tooltip("Number of objects which are present at max")]
-    private int _numberOfObjects = 10;
     [Header("Optional")]
     [SerializeField]
     private Transform _startLocation;
+    [Min(3)]
+    [SerializeField]
+    [Tooltip("Number of objects which are present at max")]
+    private int _numberOfObjects = 10;
+    [SerializeField]
+    [Tooltip("Number of empty hallwasys between a obstacle")]
+    [Min(1)]
+    private int _noObstaclePattern = 1;
 
     private Vector3 _startPosition;
+    private bool _spawnObstacle = true;    
+    private int _emptySpawnCounter = 0;
+
+    private PrefabFromResourceProvider _prefabProvider;
+
 
 #pragma warning disable IDE0090 // Use 'new(...)'
     // All current spawned objects which make up a linear hallway level.
@@ -49,6 +61,8 @@ namespace FlyThrough
     // Start is called before the first frame update
     private void Start()
     {
+      _prefabProvider = GetComponent<PrefabFromResourceProvider>();
+      
       ValidateObjectBlueprintsToSpawn();
       SpawnAndPlaceStartObj();
       SpawnFromSecondToLastPresentObj();
@@ -80,14 +94,43 @@ namespace FlyThrough
       }
 
     }
+    
+    private GameObject NextBluePrintObject => _spawnObstacle ? _prefabProvider.GetRandomPrefab() : _emptyHallway;
 
     private void AddHallWay(GameObject origin)
     {
-      GameObject nextHallway = GameObject.Instantiate<GameObject>(_emptyHallway, transform);
+
+      DecideBetweenObstacleAndEmptyHallway();
+
+      // Spawn next object and place in respective position.
+      GameObject nextHallway = GameObject.Instantiate<GameObject>(NextBluePrintObject);
       SnapMover.MoveSnap(origin, nextHallway, PlaceSnapDirection.Front);
+
+      // Rotate the wall of the obstacle. Rotation changes the position of holes.
+      // This way one can  get out more content of the assets as obstacles.
+      if (_spawnObstacle)
+      {        
+        nextHallway.GetComponentInChildren<RotateBy90Degree>().RotateRandomSteps();        
+      }
       
-      _currentHallways.Add(nextHallway);
+      _currentHallways.Add(nextHallway);      
       nextHallway.transform.SetParent(transform);
+      
+      void DecideBetweenObstacleAndEmptyHallway()
+      {
+        if (_spawnObstacle)
+        {
+          _spawnObstacle = !_spawnObstacle;
+        }
+        else
+        {
+          bool switchToSpawnCategory = (_emptySpawnCounter / _noObstaclePattern) == 1;
+          _spawnObstacle = switchToSpawnCategory ? !_spawnObstacle : _spawnObstacle;
+          _emptySpawnCounter = switchToSpawnCategory ? 0 : _emptySpawnCounter;
+          _emptySpawnCounter++;
+        }
+      }
+      
     }
 
     public void DestroyHeadAndSpawnNewTail()
