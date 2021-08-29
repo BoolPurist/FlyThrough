@@ -35,16 +35,16 @@ namespace FlyThrough
     {     
       if (_emptyHallway == null || _emptyHallway.GetComponent<Renderer>() == null)
       {
-        ErrorMessage(nameof(_emptyHallway), typeof(Renderer).Name);
+        ErrorMessageOfMissingObjOrMissingComponent(nameof(_emptyHallway), typeof(Renderer).Name);
       }      
       else if (_colliderTiggerReset == null || _colliderTiggerReset.GetComponent<Collider>() == null)
       {
-        ErrorMessage(nameof(_colliderTiggerReset), typeof(Collider).Name);
-      }
-
-      static void ErrorMessage(string nameOfParameter, string nameOfNeededComponent)
-        => Debug.LogError($"{nameOfParameter} must be provided with a component derived from {nameOfNeededComponent}");
+        ErrorMessageOfMissingObjOrMissingComponent(nameof(_colliderTiggerReset), typeof(Collider).Name);
+      }      
     }
+
+    private static void ErrorMessageOfMissingObjOrMissingComponent(string nameOfParameter, string nameOfNeededComponent)
+        => Debug.LogError($"{nameOfParameter} must be provided with a component derived from {nameOfNeededComponent}");
 
     // Start is called before the first frame update
     private void Start()
