@@ -15,8 +15,6 @@ namespace FlyThrough
     [Tooltip("Object, which is spawn for every 2. object")]
     private GameObject _emptyHallway;
     [SerializeField]
-    private GameObject _obstacle;
-    [SerializeField]
     [Tooltip("Collider zone to for the player trigger reset of all objects to origin")]
     private GameObject _colliderTiggerReset;
     [Header("Optional")]
