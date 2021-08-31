@@ -42,15 +42,19 @@ namespace FlyThrough
 #pragma warning restore IDE0090 // Use 'new(...)'
 
     private void ValidateObjectBlueprintsToSpawn()
-    {     
+    {
       if (_emptyHallway == null || _emptyHallway.GetComponent<Renderer>() == null)
       {
         ErrorMessageOfMissingObjOrMissingComponent(nameof(_emptyHallway), typeof(Renderer).Name);
-      }      
+      }
       else if (_colliderTiggerReset == null || _colliderTiggerReset.GetComponent<Collider>() == null)
       {
         ErrorMessageOfMissingObjOrMissingComponent(nameof(_colliderTiggerReset), typeof(Collider).Name);
-      }      
+      }
+      else if (_startPosition == null)
+      {
+        ErrorMessageOfMissingObjOrMissingComponent(nameof(_startPosition), typeof(Transform).Name);
+      }
     }
 
     private static void ErrorMessageOfMissingObjOrMissingComponent(string nameOfParameter, string nameOfNeededComponent)

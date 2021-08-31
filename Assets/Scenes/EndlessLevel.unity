@@ -311,6 +311,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 6626139177869575590, guid: 9e240e1c46e8a55499bd43991585229f,
         type: 3}
+      propertyPath: _startLocation
+      value: 
+      objectReference: {fileID: 1811006598}
+    - target: {fileID: 6626139177869575590, guid: 9e240e1c46e8a55499bd43991585229f,
+        type: 3}
       propertyPath: _numberOfObjects
       value: 20
       objectReference: {fileID: 0}
@@ -348,6 +353,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e240e1c46e8a55499bd43991585229f, type: 3}
+--- !u!1 &1811006597
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1811006598}
+  m_Layer: 0
+  m_Name: SpawnStarLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1811006598
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811006597}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.17186594, y: 0.10017204, z: 0.68461}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1893727748 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 268916420, guid: 454f35d6ac994114bbbcb1050d4710cc,
@@ -425,11 +460,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3339347999162756468, guid: 309c78f59bd8db7418c9b453dd9187d8,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 6178dd8b656bd9240b288cc1fe55fd2c, type: 2}
     - target: {fileID: 3339347999162756470, guid: 309c78f59bd8db7418c9b453dd9187d8,
         type: 3}
       propertyPath: m_RootOrder
@@ -513,6 +543,36 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4708958543320039565, guid: 454f35d6ac994114bbbcb1050d4710cc,
+        type: 3}
+      propertyPath: m_Depth
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4708958543320039565, guid: 454f35d6ac994114bbbcb1050d4710cc,
+        type: 3}
+      propertyPath: m_TargetEye
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4708958543320039565, guid: 454f35d6ac994114bbbcb1050d4710cc,
+        type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4708958543320039565, guid: 454f35d6ac994114bbbcb1050d4710cc,
+        type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4708958543320039565, guid: 454f35d6ac994114bbbcb1050d4710cc,
+        type: 3}
+      propertyPath: m_FOVAxisMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4708958543320039565, guid: 454f35d6ac994114bbbcb1050d4710cc,
+        type: 3}
+      propertyPath: m_projectionMatrixMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4708958543320039567, guid: 454f35d6ac994114bbbcb1050d4710cc,
         type: 3}
       propertyPath: m_Name
@@ -578,5 +638,10 @@ PrefabInstance:
       propertyPath: _playerPosition
       value: 
       objectReference: {fileID: 615396263}
+    - target: {fileID: 4708958543320039795, guid: 454f35d6ac994114bbbcb1050d4710cc,
+        type: 3}
+      propertyPath: OffsetToPlayer.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 454f35d6ac994114bbbcb1050d4710cc, type: 3}
