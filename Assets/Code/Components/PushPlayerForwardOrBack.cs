@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,6 +7,7 @@ using UnityEngine.Events;
 
 namespace FlyThrough
 {
+
   [RequireComponent(typeof(Rigidbody))]
   [RequireComponent(typeof(PlayerInput))]
   public class PushPlayerForwardOrBack : MonoBehaviour
@@ -15,15 +17,15 @@ namespace FlyThrough
     private float Speed = 100f;
     [SerializeField]
     [Min(0)]
-    private float TravelDistanceThreshold = 10f;
+    private float _travelDistanceThreshold = 10f;
     [SerializeField]
     private bool _manuelControl = false;
     [SerializeField]
     [Min(0)]
     private float SpeedAfterDeath = 10f;
 
-    [SerializeField]
-    private UnityEvent OnTraveledThreshold;
+    
+    public Action<float> OnTraveledThreshold;
     
 
 
@@ -55,9 +57,9 @@ namespace FlyThrough
 
         float distance = Vector3.Distance(transform.position, currentReferencLocation);
 
-        if (distance >= TravelDistanceThreshold)
+        if (distance >= _travelDistanceThreshold)
         {
-          OnTraveledThreshold.Invoke();
+          OnTraveledThreshold?.Invoke(_travelDistanceThreshold);
           currentReferencLocation = transform.position;
         }
       }

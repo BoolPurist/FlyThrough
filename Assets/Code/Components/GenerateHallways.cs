@@ -17,9 +17,12 @@ namespace FlyThrough
     [SerializeField]
     [Tooltip("Collider zone to for the player trigger reset of all objects to origin")]
     private GameObject _colliderTiggerReset;
-    [Header("Optional")]
     [SerializeField]
-    private Transform _startLocation;
+    private PushPlayerForwardOrBack _player;
+    [Header("Optional")]
+
+    [SerializeField]
+    private Vector3 _startLocation;
     [Min(3)]
     [SerializeField]
     [Tooltip("Number of objects which are present at max")]
@@ -51,9 +54,9 @@ namespace FlyThrough
       {
         ErrorMessageOfMissingObjOrMissingComponent(nameof(_colliderTiggerReset), typeof(Collider).Name);
       }
-      else if (_startPosition == null)
+      else if (_player == null)
       {
-        ErrorMessageOfMissingObjOrMissingComponent(nameof(_startPosition), typeof(Transform).Name);
+        ErrorMessageOfMissingObjOrMissingComponent(nameof(_player), typeof(PushPlayerForwardOrBack).Name);
       }
     }
 
@@ -64,6 +67,7 @@ namespace FlyThrough
     private void Start()
     {
       _prefabProvider = GetComponent<PrefabFromResourceProvider>();
+      _player.OnTraveledThreshold += ResetObjectsBackToStartLocation;
       
       ValidateObjectBlueprintsToSpawn();
       SpawnAndPlaceStartObj();
@@ -71,8 +75,7 @@ namespace FlyThrough
       AddColliderTriggerForGoingBack();
 
       void SpawnAndPlaceStartObj()
-      {
-        _startPosition = _startLocation == null ? Vector3.zero : _startLocation.position;
+      {        
         GameObject firstHallway = GameObject.Instantiate<GameObject>(_emptyHallway, transform);
         firstHallway.transform.position = _startPosition;
 
@@ -143,10 +146,14 @@ namespace FlyThrough
       _colliderTiggerReset.transform.position = _currentHallways[COLLIDER_TRIGGER_FORGOINGBACK_INDEX].transform.position;
     }
 
-    public void ResetObjectsBackToStartLocation()
+    public void ResetObjectsBackToStartLocation(float travelThresholdForPlayer)
     {
-      _startLocation.position = Vector3.zero;
+      
+      // Bind all objects to be moved to the head hallway object.
       Transform headHallwayTrans = _currentHallways[0].transform;
+      Transform previousParentOfPlayer = _player.transform.parent;
+      _player.transform.SetParent(headHallwayTrans);
+
       for (int i = 1; i < _currentHallways.Count; i++)
       {
         _currentHallways[i].transform.SetParent(headHallwayTrans);
@@ -154,15 +161,29 @@ namespace FlyThrough
 
       _colliderTiggerReset.transform.SetParent(headHallwayTrans);
 
-      headHallwayTrans.position = Vector3.zero;
+      // Move all objects indirectly by moving the head hallway object
+      headHallwayTrans.position = _startLocation;
 
+      // Assigning all moved objects to their priviousParent
       foreach (GameObject hallway in _currentHallways)
       {
         hallway.transform.SetParent(transform);
       }
 
       _colliderTiggerReset.transform.SetParent(transform);
+      _player.transform.SetParent(previousParentOfPlayer);
+      
+    }
+
+    private void OnDestroy()
+    {
+      if (_player != null)
+      {
+        _player.OnTraveledThreshold -= ResetObjectsBackToStartLocation;
+      }
     }
   }
+
+  
 
 }
