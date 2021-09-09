@@ -24,6 +24,8 @@ namespace FlyThrough
     [Min(0)]
     private float SpeedAfterDeath = 10f;
 
+    public bool SetManuelControl(bool controlManuelly) => _manuelControl = controlManuelly;
+
     
     public Action<float> OnTraveledThreshold;
     

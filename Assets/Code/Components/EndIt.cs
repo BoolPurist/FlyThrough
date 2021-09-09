@@ -24,6 +24,8 @@ namespace FlyThrough
     private PushPlayerForwardOrBack _pusher;
     private PlayerMovement _movement;
 
+    public void SetIgnoreDeath(bool ignoresDeath) => _ignoreDeath = ignoresDeath;
+
     private void Start()
     {
       _pusher = GetComponent<PushPlayerForwardOrBack>();

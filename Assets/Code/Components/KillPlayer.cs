@@ -16,6 +16,6 @@ namespace FlyThrough
       {
         player.GetComponent<EndIt>().InitEndGame();
       }
-    }
+    }    
   }
 }
