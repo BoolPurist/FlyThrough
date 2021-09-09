@@ -32,6 +32,12 @@ namespace FlyThrough
       public KeyCode ScaleInWidth = KeyCode.V;
     }
 
+    [System.Serializable]
+    public class MenuKeyBindings
+    {
+      public KeyCode Pause = KeyCode.P;
+    }
+
     #region Key bindings
 
     [SerializeField]
@@ -40,6 +46,8 @@ namespace FlyThrough
     private RotationKeyBindings RotationBindings;
     [SerializeField]
     private ScalingKeyBindings ScalingBindings;
+    [SerializeField]
+    private MenuKeyBindings MenuBindings;
     
 
     #endregion
@@ -57,6 +65,8 @@ namespace FlyThrough
 
     public bool ScaleInHeightPressed { get; private set; } = false;
     public bool ScaleInWidthPressed { get; private set; } = false;
+
+    public bool PausedPressed { get; private set; } = false;
     #endregion
 
 
@@ -75,7 +85,7 @@ namespace FlyThrough
 
       ScaleInHeightPressed = Input.GetKey(ScalingBindings.ScaleInHeigth);
       ScaleInWidthPressed = Input.GetKey(ScalingBindings.ScaleInWidth);
-
+      PausedPressed = Input.GetKey(MenuBindings.Pause);
 
     }
   }
