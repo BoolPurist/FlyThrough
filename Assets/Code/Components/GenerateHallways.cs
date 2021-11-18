@@ -118,7 +118,7 @@ namespace FlyThrough
         nextHallway.GetComponentInChildren<RotateBy90Degree>().RotateRandomSteps();        
       }
       
-      _currentHallways.Add(nextHallway);      
+      _currentHallways.Add(nextHallway);
       nextHallway.transform.SetParent(transform);
       
       void DecideBetweenObstacleAndEmptyHallway()

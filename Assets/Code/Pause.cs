@@ -14,25 +14,22 @@ namespace FlyThrough
     [SerializeField]
     private Canvas PauseMenu;
 
-    [SerializeField]
-    private PlayerInput InputFromPlayer;
 
     private DateTime _currentTimeStamp;
     private bool _gameIsPaused = false;
+
+    private GameInput _input;
 
     private void ResetCooldown() 
       => _currentTimeStamp = DateTime.Now.AddSeconds(Convert.ToDouble(CoolDownSecondsPause));
     private bool PauseCoolDownIsOff => _currentTimeStamp <= DateTime.Now;
     private void SkipOneCooldown() => _currentTimeStamp = DateTime.Now;
 
-    // Start is called before the first frame update
-    void Start()
+
+    #region component callbacks
+    private void Start()
     {
-      if (InputFromPlayer == null)
-      {
-        Debug.LogWarning($"{nameof(InputFromPlayer)} as {typeof(PlayerInput).Name} component is missing");
-      }
-      else if (PauseMenu == null)
+      if (PauseMenu == null)
       {
         Debug.LogWarning($"{nameof(PauseMenu)} as {typeof(Canvas).Name} component is missing");
       }
@@ -41,12 +38,44 @@ namespace FlyThrough
       SkipOneCooldown();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
+      => StartListeningForInput();
+
+    private void OnDisable()
+      => StopListeningForInputs();
+    private void OnDestroy()
+      => StopListeningForInputs();
+    #endregion
+
+    #region subscriber logic
+    private void StartListeningForInput()
     {
-      if (InputFromPlayer.PausedPressed && PauseCoolDownIsOff)
+      _input = FindObjectOfType<GameInput>();
+      if (_input == null)
       {
-        
+        Debug.LogWarning($"No component found {typeof(GameInput).Name} for listening to player inputs.");
+      }
+      else
+      {
+        _input.OnPauseInput += OnPausePressed;
+      }
+    }
+
+    private void StopListeningForInputs()
+    {
+      if (_input != null)
+      {
+        _input.OnPauseInput -= OnPausePressed;
+      }
+    }
+    #endregion
+
+    #region input handling
+    public void OnPausePressed()
+    {
+      if (PauseCoolDownIsOff)
+      {
+
         if (_gameIsPaused)
         {
           UnPauseGame();
@@ -55,9 +84,12 @@ namespace FlyThrough
         {
           PauseGame();
         }
-        
+
       }
     }
+
+    #endregion
+
 
     public void UnPauseGame()
     {
@@ -76,6 +108,8 @@ namespace FlyThrough
     }
 
     public void EndApp() => Application.Quit();
+
+    
   }
 }
 

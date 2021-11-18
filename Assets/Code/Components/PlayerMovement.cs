@@ -5,7 +5,6 @@ using UnityEngine;
 namespace FlyThrough
 {
   [RequireComponent(typeof(Rigidbody))]
-  [RequireComponent(typeof(PlayerInput))]
   public class PlayerMovement : MonoBehaviour
   {
     [SerializeField]
@@ -28,8 +27,13 @@ namespace FlyThrough
     private float _startScaleX;
     private float _startScaleY;
 
-    private PlayerInput _playerInput;
     private Rigidbody _rigidBody;
+
+    private GameInput _inputs;
+
+    private Vector2 _inputMovementXY;
+    private float _inputScaleY;
+    private float _inputRotateZ;
 
     private void OnValidate()
     {
@@ -40,47 +44,106 @@ namespace FlyThrough
       _minScaleX = Mathf.Clamp(_minScaleX, 0f, _maxScaleHeight);
     }
 
+    #region Input handling
+    private void ResetInput()
+    {
+      _inputMovementXY = Vector2.zero;
+      _inputScaleY = 0f;
+      _inputRotateZ = 0f;
+    }
+
+    #region Handling incoming input 
+    
+    private void OnMovementXY(Vector2 movementXY)
+    {
+      _inputMovementXY.x = ClampInput(_inputMovementXY.x + movementXY.x);
+      _inputMovementXY.y = ClampInput(_inputMovementXY.y + movementXY.y);
+    }
+
+    private void OnScaleY(float scale)
+      => _inputScaleY = ClampInput(_inputScaleY + scale);
+
+    private void OnRotateZ(float rotation)
+      => _inputRotateZ = ClampInput(_inputRotateZ + rotation);
+
+    #endregion
+
+    private float ClampInput(float input) => Mathf.Clamp(input, -1f, 1f);
+    #endregion
+
+    #region component callbacks
     // Start is called before the first frame update
     void Start()
     {
-      _playerInput = gameObject.GetComponent<PlayerInput>();
-      _rigidBody = gameObject.GetComponent<Rigidbody>();
+      _rigidBody = gameObject.GetComponent<Rigidbody>();      
 
       _startScaleX = transform.localScale.x;
       _startScaleY = transform.localScale.y;
     }
 
+    private void OnEnable()
+    {
+      ResetInput();
+      StartListeningForInputs();
+    }
 
+    private void OnDisable()
+      => StopListeningForInputs();
+
+    private void OnDestroy()
+      => StopListeningForInputs();
 
     private void FixedUpdate()
     {
       AdjustMovementXY();
       AdjustRotationZ();
       AdjustScalingXY();
+      ResetInput();
     }
+    #endregion
+
+    #region subscriber logic
+    private void StartListeningForInputs()
+    {
+      _inputs = FindObjectOfType<GameInput>();
+
+      if (_inputs == null)
+      {
+        Debug.LogWarning($"No component {typeof(GameInput).Name} found for listening to player input");
+      }
+      else
+      {
+        _inputs.OnMovementXYInput += OnMovementXY;
+        _inputs.OnScaleYInput += OnScaleY;
+        _inputs.OnRotationZInput += OnRotateZ;
+      }
+    }
+
+    private void StopListeningForInputs()
+    {
+      if (_inputs != null)
+      {
+        _inputs.OnMovementXYInput -= OnMovementXY;
+        _inputs.OnScaleYInput -= OnScaleY;
+        _inputs.OnRotationZInput -= OnRotateZ;
+      }
+    }
+
+    #endregion
+
+    #region movement, rotating and scaling
 
     private void AdjustMovementXY()
     {
-      var movement = new Vector3();
-
       float currentSpeed = _speed * Time.deltaTime;
-
-      movement.x -= _playerInput.MoveLeftPressed ? currentSpeed : 0f;
-      movement.x += _playerInput.MoveRightPressed ? currentSpeed : 0f;
-      movement.y += _playerInput.MoveUpPressed ? currentSpeed : 0f;
-      movement.y -= _playerInput.MoveDownPressed ? currentSpeed : 0f;
-
-      _rigidBody.velocity = movement;
+      _inputMovementXY *= currentSpeed;
+      _rigidBody.velocity = _inputMovementXY;
     }
 
     private void AdjustRotationZ()
     {
-      float currentAngularSpeed = _rotationSpeed * Time.deltaTime;
-      var rotation = new Vector3();
-
-      rotation.z += _playerInput.RotateLeftPressed ? currentAngularSpeed : 0f;
-      rotation.z -= _playerInput.RotateRigthPressed ? currentAngularSpeed : 0f;
-
+      float currentAngularSpeed = _rotationSpeed * Time.deltaTime * _inputRotateZ;
+      var rotation = Vector3.forward * currentAngularSpeed;
       _rigidBody.angularVelocity = rotation;
     }
 
@@ -89,11 +152,7 @@ namespace FlyThrough
       _scaleFactorInHeight = Mathf.Clamp(_scaleFactorInHeight, 0f, 1f);
 
       float currentScaleFactor = _scaleSpeed * Time.deltaTime;
-      var scaleChange = 0f;
-
-      scaleChange += _playerInput.ScaleInHeightPressed ? currentScaleFactor : 0f;
-      scaleChange -= _playerInput.ScaleInWidthPressed ? currentScaleFactor : 0f;
-
+      var scaleChange = _inputScaleY * currentScaleFactor;
       _scaleFactorInHeight += scaleChange;
       _scaleFactorInHeight = Mathf.Clamp(_scaleFactorInHeight, 0f, _maxScaleHeight);
 
@@ -106,9 +165,12 @@ namespace FlyThrough
 
     public void StopMovement()
     {
-      Vector3 stopper = Vector3.zero;
-      _rigidBody.velocity = stopper;
-      _rigidBody.angularVelocity = stopper;
+      _rigidBody.velocity = Vector3.zero;
+      _rigidBody.angularVelocity = Vector3.zero;
     }
+
+    #endregion
+
+
   }
 }

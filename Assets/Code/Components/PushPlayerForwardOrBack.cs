@@ -24,49 +24,88 @@ namespace FlyThrough
     [Min(0)]
     private float SpeedAfterDeath = 10f;
 
-    public bool SetManuelControl(bool controlManuelly) => _manuelControl = controlManuelly;
-
     
+
+
     public Action<float> OnTraveledThreshold;
-    
+
+    private GameInput _input;
 
 
+    private float _pushInput;
+
+    private void ResetInputs() => _pushInput = 0f;
 
     private Vector3 currentReferencLocation;
-    
-    private Rigidbody _rb;
-    private PlayerInput _input;
 
-    // Start is called before the first frame update
-    void Start()
+    private Rigidbody _rb;
+
+    private void Start()
     {
       _rb = GetComponent<Rigidbody>();
-      _input = GetComponent<PlayerInput>();
       currentReferencLocation = transform.position;
     }
 
-    
+    private void OnEnable()
+    {
+      StartListeningForInputs();
+      ResetInputs();
+    }
+
+    private void OnDisable()
+      => StopListeningForInputs();
+
+    private void OnDestroy()
+      => StopListeningForInputs();
+
+    private void OnPushInput(float input)
+    {
+      if (_manuelControl)
+      {
+        _pushInput = Mathf.Clamp(_pushInput + input, -1f, 1f);
+      }
+    }
+
+    public bool SetManuelControl(bool controlManuelly) => _manuelControl = controlManuelly;
+
+    private void StartListeningForInputs()
+    {
+      _input = FindObjectOfType<GameInput>();
+
+      if (_input == null)
+      {
+        Debug.LogWarning(
+          $"No component {typeof(GameInput).Name} found for listening to inputs in the scene"
+          );
+      }
+
+      _input.OnPushManuelly += OnPushInput;
+    }
+
+    private void StopListeningForInputs()
+    {
+      if (_input != null)
+      {
+        _input.OnPushManuelly -= OnPushInput;
+      }
+    }
 
     private void FixedUpdate()
     {
-      bool movedForward = !_manuelControl || _input.MoveForwardPressed;
-      if ( movedForward || _input.MoveBackwardPressed )
+      _pushInput = _manuelControl ? _pushInput : 1f;
+      float currentSpeed = (_pushInput * Speed) * Time.deltaTime;
+      Vector3 movement = Vector3.forward * currentSpeed;
+      _rb.AddForce(movement, ForceMode.VelocityChange);
+
+      float distance = Vector3.Distance(transform.position, currentReferencLocation);
+
+      if (distance >= _travelDistanceThreshold)
       {
-        Vector3 direction = movedForward ? Vector3.forward : Vector3.back;
-        Vector3 movement = (direction * Speed) * Time.deltaTime;
-        _rb.AddForce(movement, ForceMode.VelocityChange);
-
-
-        float distance = Vector3.Distance(transform.position, currentReferencLocation);
-
-        if (distance >= _travelDistanceThreshold)
-        {
-          OnTraveledThreshold?.Invoke(_travelDistanceThreshold);
-          currentReferencLocation = transform.position;
-        }
+        OnTraveledThreshold?.Invoke(_travelDistanceThreshold);
+        currentReferencLocation = transform.position;
       }
-
       
+      ResetInputs();
     }
 
     public void InitLastMovesToGameOver()
