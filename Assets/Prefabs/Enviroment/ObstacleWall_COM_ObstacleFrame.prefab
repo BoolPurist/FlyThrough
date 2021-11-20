@@ -31,6 +31,63 @@ Transform:
   m_Father: {fileID: 4632977772049774124}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5620619176236059778
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5202844870568792448}
+  - component: {fileID: 5352140067110799196}
+  - component: {fileID: 2755223251908601597}
+  m_Layer: 8
+  m_Name: PassScoreCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5202844870568792448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5620619176236059778}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 967139844787105812}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5352140067110799196
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5620619176236059778}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 0.25}
+  m_Center: {x: 0.0016724467, y: -0.05797109, z: 0.003081724}
+--- !u!114 &2755223251908601597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5620619176236059778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fa0fe52ad4f8bc4ab56f170c4f44eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6746370672559274507
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +317,12 @@ PrefabInstance:
 --- !u!4 &3489041629015026837 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7316463320494125406, guid: 9658f639dca78f74794af527deb880a0,
+    type: 3}
+  m_PrefabInstance: {fileID: 6188751005829012939}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &967139844787105812 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6379670825224564191, guid: 9658f639dca78f74794af527deb880a0,
     type: 3}
   m_PrefabInstance: {fileID: 6188751005829012939}
   m_PrefabAsset: {fileID: 0}

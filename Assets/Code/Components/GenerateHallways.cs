@@ -9,7 +9,9 @@ namespace FlyThrough
   public class GenerateHallways : MonoBehaviour
   {
     private const int COLLIDER_TRIGGER_FORGOINGBACK_INDEX = 3;
-    
+
+    public event Action<int> OnPlayerHasPassedObstacle; 
+
     [Header("Required")]
     [SerializeField]  
     [Tooltip("Object, which is spawn for every 2. object")]
@@ -37,6 +39,8 @@ namespace FlyThrough
     private int _emptySpawnCounter = 0;
 
     private PrefabFromResourceProvider _prefabProvider;
+    private int _wallPassedByPlayerScore = 0;
+
 
 
 #pragma warning disable IDE0090 // Use 'new(...)'
@@ -115,11 +119,13 @@ namespace FlyThrough
       // This way one can  get out more content of the assets as obstacles.
       if (_spawnObstacle)
       {        
-        nextHallway.GetComponentInChildren<RotateBy90Degree>().RotateRandomSteps();        
+        nextHallway.GetComponentInChildren<RotateBy90Degree>().RotateRandomSteps();
+        var wallPassThroughByPlayer = nextHallway.GetComponentInChildren<FireOnPlayerPassed>();
+        wallPassThroughByPlayer.OnPlayerHasPassed += OnPlayerPassedObstacle;
       }
       
       _currentHallways.Add(nextHallway);
-      nextHallway.transform.SetParent(transform);
+      nextHallway.transform.SetParent(transform);      
       
       void DecideBetweenObstacleAndEmptyHallway()
       {
@@ -140,7 +146,15 @@ namespace FlyThrough
 
     public void DestroyHeadAndSpawnNewTail()
     {
-      Destroy(_currentHallways[0]);
+      GameObject hallwayToDestory = _currentHallways[0];
+      var wallPassThroughByPlayer = hallwayToDestory.GetComponentInChildren<FireOnPlayerPassed>();
+
+      if (wallPassThroughByPlayer != null)
+      {
+        wallPassThroughByPlayer.OnPlayerHasPassed -= OnPlayerPassedObstacle;
+      }
+
+      Destroy(hallwayToDestory);
       _currentHallways.RemoveAt(0);
       AddHallWay(_currentHallways[_currentHallways.Count - 1]);
       _colliderTiggerReset.transform.position = _currentHallways[COLLIDER_TRIGGER_FORGOINGBACK_INDEX].transform.position;
@@ -182,6 +196,13 @@ namespace FlyThrough
         _player.OnTraveledThreshold -= ResetObjectsBackToStartLocation;
       }
     }
+
+    private void OnPlayerPassedObstacle()
+    {
+      _wallPassedByPlayerScore++;
+      OnPlayerHasPassedObstacle?.Invoke(_wallPassedByPlayerScore);
+    }
+
   }
 
   

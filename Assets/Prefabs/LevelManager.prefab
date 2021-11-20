@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6626139177869575589}
   - component: {fileID: 6626139177869575590}
+  - component: {fileID: 2064090357}
+  - component: {fileID: 2064090356}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -43,8 +45,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d449d4da3c5e0104a83c94e60e086783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _numberOfObjects: 10
-  _hallway: {fileID: 0}
-  _startHead: {fileID: 0}
-  _colliderToNextChunk: {fileID: 1791063044259409473, guid: 871b3be83b94b5047957572bc43fb0fc,
+  _emptyHallway: {fileID: 1663082168008780062, guid: 6ea63b8247bd04e4593d721465fb4018,
     type: 3}
+  _colliderTiggerReset: {fileID: 1791063044259409473, guid: 871b3be83b94b5047957572bc43fb0fc,
+    type: 3}
+  _player: {fileID: 0}
+  _startLocation: {x: 0, y: 0, z: 0}
+  _numberOfObjects: 20
+  _noObstaclePattern: 4
+--- !u!1773428102 &2064090357
+ParentConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6626139177869575591}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_TranslationOffsets: []
+  m_RotationOffsets: []
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 0
+  m_Sources: []
+--- !u!114 &2064090356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6626139177869575591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cb8b6b06c5af614aa66ce0cacddd868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loadParameters: {fileID: 11400000, guid: da994b2396a7d4b4abf95224bcdb3b80, type: 2}

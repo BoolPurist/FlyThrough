@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 
 namespace FlyThrough
 {
-
-
   public class PlayerStateController : MonoBehaviour
   {
     [System.Serializable]

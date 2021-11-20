@@ -23,14 +23,10 @@ namespace FlyThrough
     [SerializeField]
     [Min(0)]
     private float SpeedAfterDeath = 10f;
-
-    
-
-
+ 
     public Action<float> OnTraveledThreshold;
 
     private GameInput _input;
-
 
     private float _pushInput;
 
