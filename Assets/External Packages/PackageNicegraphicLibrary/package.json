@@ -1,0 +1,7 @@
+{
+    "name": "com.chaosallin.nicegraphiclibrary",
+    "version": "1.0.1",
+    "description": "Contains code to be used in unity projects for 3d games",
+    "displayName": "Nicegraphic Library",
+    "unity": "2020.3"
+}

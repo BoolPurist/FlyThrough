@@ -101,7 +101,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Rotation: 264.7007
+    - _Rotation: 351.5132
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -116,3 +116,4 @@ Material:
     - _GroundColor: {r: 0.0084104715, g: 0.13716166, b: 0.254717, a: 1}
     - _SkyTint: {r: 0.19131947, g: 0, b: 1, a: 1}
     - _Tint: {r: 1, g: 1, b: 1, a: 0}
+  m_BuildTextureStacks: []

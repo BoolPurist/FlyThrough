@@ -9,7 +9,6 @@ namespace FlyThrough
 {
 
   [RequireComponent(typeof(Rigidbody))]
-  [RequireComponent(typeof(PlayerInput))]
   public class PushPlayerForwardOrBack : MonoBehaviour
   {
     [SerializeField]

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e77ad1751a77704e9ac1b5d80e6760a, type: 3}
+  m_Name: TestTextTemplateData
+  m_EditorClassIdentifier: 
+  _leftSeparator: '{'
+  _rightSeparator: '}'
+  TextTemplate: Player {PlayerName} has HP {HP} and was killed {DeathCount}.
+  TextPreview: Player Pattern has HP 100 and was killed 2.
+  ValueInText:
+  - Name: HP
+    DefaultValue: 100
+  - Name: PlayerName
+    DefaultValue: Pattern
+  - Name: DeathCount
+    DefaultValue: 2
