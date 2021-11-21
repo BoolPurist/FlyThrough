@@ -11,9 +11,9 @@ public class AdjustRectTransformSize : MonoBehaviour
   [SerializeField]
   private float Height = 100f;
   [SerializeField]
-  private float Width = 100f;
+  private float Width = 100f; 
 
-  
+
   private void Awake()
   {
     _rectTransform = GetComponent<RectTransform>();
