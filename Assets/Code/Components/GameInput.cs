@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
+using NiceGraphicLibrary;
+
 namespace FlyThrough
 {
-  public abstract class GameInput : MonoBehaviour
+  public abstract class GameInput<T> : SingletonComponentPersistent<T> where T : MonoBehaviour
   {
     public event Action<Vector2> OnMovementXYInput;
     public event Action<float> OnScaleYInput;

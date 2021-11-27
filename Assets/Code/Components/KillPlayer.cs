@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace FlyThrough
-{
-  
+{  
   public class KillPlayer : MonoBehaviour
   {
     private void OnCollisionEnter(Collision collision)

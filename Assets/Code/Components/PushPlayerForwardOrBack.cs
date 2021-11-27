@@ -25,7 +25,7 @@ namespace FlyThrough
  
     public Action<float> OnTraveledThreshold;
 
-    private GameInput _input;
+    private SGameInputKeyboard _input;
 
     private float _pushInput;
 
@@ -65,12 +65,12 @@ namespace FlyThrough
 
     private void StartListeningForInputs()
     {
-      _input = FindObjectOfType<GameInput>();
+      _input = FindObjectOfType<SGameInputKeyboard>();
 
       if (_input == null)
       {
         Debug.LogWarning(
-          $"No component {typeof(GameInput).Name} found for listening to inputs in the scene"
+          $"No component {typeof(SGameInputKeyboard).Name} found for listening to inputs in the scene"
           );
       }
 

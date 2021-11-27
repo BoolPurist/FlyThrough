@@ -18,7 +18,7 @@ namespace FlyThrough
     private DateTime _currentTimeStamp;
     private bool _gameIsPaused = false;
 
-    private GameInput _input;
+    private SGameInputKeyboard _input;
 
     private void ResetCooldown() 
       => _currentTimeStamp = DateTime.Now.AddSeconds(Convert.ToDouble(CoolDownSecondsPause));
@@ -50,10 +50,10 @@ namespace FlyThrough
     #region subscriber logic
     private void StartListeningForInput()
     {
-      _input = FindObjectOfType<GameInput>();
+      _input = FindObjectOfType<SGameInputKeyboard>();
       if (_input == null)
       {
-        Debug.LogWarning($"No component found {typeof(GameInput).Name} for listening to player inputs.");
+        Debug.LogWarning($"No component found {typeof(SGameInputKeyboard).Name} for listening to player inputs.");
       }
       else
       {

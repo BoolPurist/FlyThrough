@@ -29,7 +29,7 @@ namespace FlyThrough
 
     private Rigidbody _rigidBody;
 
-    private GameInput _inputs;
+    private SGameInputKeyboard _inputs;
 
     private Vector2 _inputMovementXY;
     private float _inputScaleY;
@@ -105,11 +105,11 @@ namespace FlyThrough
     #region subscriber logic
     private void StartListeningForInputs()
     {
-      _inputs = FindObjectOfType<GameInput>();
+      _inputs = FindObjectOfType<SGameInputKeyboard>();
 
       if (_inputs == null)
       {
-        Debug.LogWarning($"No component {typeof(GameInput).Name} found for listening to player input");
+        Debug.LogWarning($"No component {typeof(SGameInputKeyboard).Name} found for listening to player input");
       }
       else
       {

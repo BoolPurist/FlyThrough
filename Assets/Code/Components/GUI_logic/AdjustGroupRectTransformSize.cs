@@ -18,7 +18,6 @@ namespace FlyThrough
     [SerializeField]
     private AdjustMode WhatToAdjust = AdjustMode.Nothing;
 
-
     private bool ListIsNotEmpty => _rectTransformToScale != null && _rectTransformToScale.Count != 0;
 
     private void Update()
@@ -37,7 +36,7 @@ namespace FlyThrough
             {
               toAdjust.sizeDelta = new Vector2(Width, toAdjust.sizeDelta.y);
             }
-            else
+            else if (WhatToAdjust == AdjustMode.Height)
             {
               toAdjust.sizeDelta = new Vector2(toAdjust.sizeDelta.y, Height);
             }            

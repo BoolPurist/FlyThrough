@@ -5,7 +5,7 @@ using UnityEngine;
 namespace FlyThrough
 {
   [CreateAssetMenu(fileName = "new keyboard bindings", menuName = "Data/Bindings/Keyboard")]
-  public class KeyBindingsKeyboard : ScriptableObject
+  public class KeyDefaultBindingsKeyboard : ScriptableObject
   {
     #region Bindings
     [SerializeField]
@@ -42,8 +42,8 @@ namespace FlyThrough
     public KeyCode MoveLeftButton => MoveLeft;
     public KeyCode MoveRightButton => MoveRight;
 
-    public KeyCode RotateForwardButton => RotateForward;
-    public KeyCode RotateBackButton => RotateBack;
+    public KeyCode RotateLeftButton => RotateForward;
+    public KeyCode RotateRightButton => RotateBack;
 
     public KeyCode ScaleUpButton => ScaleUp;
     public KeyCode ScaleDownButton => ScaleDown;
