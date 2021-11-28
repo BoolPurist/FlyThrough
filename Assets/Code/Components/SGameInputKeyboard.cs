@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
+using NiceGraphicLibrary;
 
 namespace FlyThrough
 {
@@ -13,7 +14,9 @@ namespace FlyThrough
     [SerializeField]
     private KeyDefaultBindingsKeyboard _defaultBindings;
 
+    [SerializeField, ReadOnlyField]    
     private KeyBoardBindingState _currentBindingState;
+    
 
     protected override void Start()
     {
@@ -22,18 +25,19 @@ namespace FlyThrough
 
       if (loadedSettings == null)
       {
-        _currentBindingState = new KeyBoardBindingState()
-        {
-          MoveUp = _defaultBindings.MoveUpButton,
-          MoveDown = _defaultBindings.MoveDownButton,
-          MoveLeft = _defaultBindings.MoveLeftButton,
-          MoveRight = _defaultBindings.MoveRightButton,
-          ScaleUp = _defaultBindings.ScaleUpButton,
-          ScaleDown = _defaultBindings.ScaleDownButton,
-          RotateLeft = _defaultBindings.RotateLeftButton,
-          RotateRight = _defaultBindings.RotateRightButton,
-          Pause = _defaultBindings.PauseButton,
-        };
+        _currentBindingState = new KeyBoardBindingState();
+        _currentBindingState[KeyBindinAction.MoveUp] = _defaultBindings.MoveUpButton; 
+        _currentBindingState[KeyBindinAction.MoveDown] = _defaultBindings.MoveDownButton; 
+        _currentBindingState[KeyBindinAction.MoveLeft] = _defaultBindings.MoveLeftButton; 
+        _currentBindingState[KeyBindinAction.MoveDown] = _defaultBindings.MoveRightButton;
+        
+        _currentBindingState[KeyBindinAction.ScaleUp] = _defaultBindings.ScaleUpButton; 
+        _currentBindingState[KeyBindinAction.ScaleDown] = _defaultBindings.ScaleDownButton;
+        
+        _currentBindingState[KeyBindinAction.RotateLeft] = _defaultBindings.RotateLeftButton; 
+        _currentBindingState[KeyBindinAction.RotateRight] = _defaultBindings.RotateRightButton;
+        
+        _currentBindingState[KeyBindinAction.Pause] = _defaultBindings.PauseButton; 
       }
       else
       {
@@ -48,16 +52,16 @@ namespace FlyThrough
       var inputRotate = 0f;
       var pushManuelly = 0f;
 
-      inputXYMovment.x += GetKeyButtonInput(_currentBindingState.MoveRight);
-      inputXYMovment.x -= GetKeyButtonInput(_currentBindingState.MoveLeft);
-      inputXYMovment.y += GetKeyButtonInput(_currentBindingState.MoveUp);
-      inputXYMovment.y -= GetKeyButtonInput(_currentBindingState.MoveDown);
+      inputXYMovment.x += GetKeyButtonInput(_currentBindingState[KeyBindinAction.MoveRight]);
+      inputXYMovment.x -= GetKeyButtonInput(_currentBindingState[KeyBindinAction.MoveLeft]);
+      inputXYMovment.y += GetKeyButtonInput(_currentBindingState[KeyBindinAction.MoveUp]);
+      inputXYMovment.y -= GetKeyButtonInput(_currentBindingState[KeyBindinAction.MoveDown]);
 
-      inputScale += GetKeyButtonInput(_currentBindingState.ScaleUp);
-      inputScale -= GetKeyButtonInput(_currentBindingState.ScaleDown);
+      inputScale += GetKeyButtonInput(_currentBindingState[KeyBindinAction.ScaleUp]);
+      inputScale -= GetKeyButtonInput(_currentBindingState[KeyBindinAction.ScaleDown]);
 
-      inputRotate += GetKeyButtonInput(_currentBindingState.RotateLeft);
-      inputRotate -= GetKeyButtonInput(_currentBindingState.RotateRight);
+      inputRotate += GetKeyButtonInput(_currentBindingState[KeyBindinAction.RotateLeft]);
+      inputRotate -= GetKeyButtonInput(_currentBindingState[KeyBindinAction.RotateRight]);
 
       pushManuelly += GetKeyButtonInput(_defaultBindings.PushManuellyForwardButton);
       pushManuelly -= GetKeyButtonInput(_defaultBindings.PushManuellyBackButton);
@@ -77,18 +81,7 @@ namespace FlyThrough
     }
 
     public KeyBoardBindingState CloneBindingKeyboardState()
-      =>  new KeyBoardBindingState()
-      {
-        MoveUp = _currentBindingState.MoveUp,
-        MoveDown = _currentBindingState.MoveDown,
-        MoveLeft = _currentBindingState.MoveLeft,
-        MoveRight = _currentBindingState.MoveRight,
-        ScaleUp = _currentBindingState.ScaleUp,
-        ScaleDown = _currentBindingState.ScaleDown,
-        RotateLeft = _currentBindingState.RotateLeft,
-        RotateRight = _currentBindingState.RotateRight,
-        Pause = _currentBindingState.Pause,
-      };
+      =>  _currentBindingState.CreateClone();
 
     public void SetBindingKeyboardState(KeyBoardBindingState newBindingState)
     {

@@ -8,34 +8,33 @@ using UnityEngine.UI;
 
 namespace FlyThrough
 {
-  public enum KeyBindinAction { MoveUp, MoveDown, MoveLeft, MoveRight, RotateLeft, RotateRight, ScaleUp, ScaleDown }
-
+  /// <summary>
+  /// Constructs all elements for an assignment to a player action
+  /// </summary>
+  [RequireComponent(typeof(HandlingKeyStrokeAssignment))]
   public class BuilderForKeybindingbars : MonoBehaviour
   {
     [SerializeField]
     GameObject _bluePrintForKeybindingBar;
 
-    private KeyBoardBindingState _currentKeyboardBindingState;
-    private Dictionary<KeyBindinAction, GameObject> _createdKeyBindings = new Dictionary<KeyBindinAction, GameObject>();
-    private List<Button> _buttonsToToggle = new List<Button>();
-
-    public GameObject this[KeyBindinAction action]
-    {
-      get => _createdKeyBindings[action];
-    }
+    private HandlingKeyStrokeAssignment _handlerForKeyAssignment;
  
     private void Start()
     {
-
-      _currentKeyboardBindingState = SGameInputKeyboard.Instance.CloneBindingKeyboardState();
+      _handlerForKeyAssignment = GetComponent<HandlingKeyStrokeAssignment>();
+      
       CreateKeyBinindBars();
     }
-  
+
     private void CreateKeyBinindBars()
     {
-      _createdKeyBindings.Clear();
+      Dictionary<KeyBindinAction, GameObject> createdKeyBindings = new Dictionary<KeyBindinAction, GameObject>();
+      KeyBoardBindingState currentKeyboardBindingState = SGameInputKeyboard.Instance.CloneBindingKeyboardState();
+
       DestroyAllChildren();
       CreateBindings();
+
+      _handlerForKeyAssignment.Initialize(createdKeyBindings);
 
       void DestroyAllChildren()
       {
@@ -48,48 +47,30 @@ namespace FlyThrough
 
       void CreateBindings()
       {
-        CreateKeybindBar("Move Up", _currentKeyboardBindingState.MoveUp.ToString(), KeyBindinAction.MoveUp);
-        CreateKeybindBar("Move Down", _currentKeyboardBindingState.MoveDown.ToString(), KeyBindinAction.MoveDown);
-        CreateKeybindBar("Move Left", _currentKeyboardBindingState.MoveLeft.ToString(), KeyBindinAction.MoveLeft);
-        CreateKeybindBar("Move Right", _currentKeyboardBindingState.MoveRight.ToString(), KeyBindinAction.MoveRight);
-        CreateKeybindBar("Scale Up", _currentKeyboardBindingState.ScaleUp.ToString(), KeyBindinAction.ScaleUp);
-        CreateKeybindBar("Scale Down", _currentKeyboardBindingState.ScaleDown.ToString(), KeyBindinAction.ScaleDown);
-        CreateKeybindBar("Rotate Left", _currentKeyboardBindingState.RotateLeft.ToString(), KeyBindinAction.RotateLeft);
-        CreateKeybindBar("Rotate Right", _currentKeyboardBindingState.RotateRight.ToString(), KeyBindinAction.RotateRight);        
+        CreateKeybindBar("Move Up", KeyBindinAction.MoveUp);
+        CreateKeybindBar("Move Down", KeyBindinAction.MoveDown);
+        CreateKeybindBar("Move Left", KeyBindinAction.MoveLeft);
+        CreateKeybindBar("Move Right", KeyBindinAction.MoveRight);
+        CreateKeybindBar("Scale Up", KeyBindinAction.ScaleUp);
+        CreateKeybindBar("Scale Down", KeyBindinAction.ScaleDown);
+        CreateKeybindBar("Rotate Left", KeyBindinAction.RotateLeft);
+        CreateKeybindBar("Rotate Right", KeyBindinAction.RotateRight);        
+        CreateKeybindBar("Pause", KeyBindinAction.Pause);        
       }
-    }
 
-    private void CreateKeybindBar(in string lableText, in string keybinding, in KeyBindinAction keyAction)
-    {
-      var newKeybindingBar = Instantiate<GameObject>(_bluePrintForKeybindingBar, transform);
-      var data = newKeybindingBar.GetComponent<KeybindingBarComponentAccessor>();
-      newKeybindingBar.name = $"KeyboardBinding{lableText.Replace(" ", "")}";
-      data.KeyLabelText.text = lableText;
-      data.KeybindingText.text = keybinding;
-      _createdKeyBindings.Add(keyAction, newKeybindingBar);
-
-      Button newButton = data.KeybindingButton;
-      _buttonsToToggle.Add(newButton);
-      var keyStrokeListener = newButton.GetComponent<ListeningToKeyStrokeOnClick>();
-      keyStrokeListener.OnStartListeningForKeystroke += DeactivateAllButtons;
-      keyStrokeListener.OnStopListeningForKeystroke += ActiavetAllButtons;
-    }
-
-    private void DeactivateAllButtons(ListeningToKeyStrokeOnClick keyStrokeListener)
-    {
-      ToggleAllButtons(false);
-    }
-
-    private void ActiavetAllButtons(ListeningToKeyStrokeOnClick keyStrokeListener)
-    {
-      ToggleAllButtons(true);
-    }
-
-    private void ToggleAllButtons(bool toggleValue)
-    {
-      foreach (Button oneButtonToToggle in _buttonsToToggle)
+      void CreateKeybindBar(in string lableText, in KeyBindinAction keyAction)
       {
-        oneButtonToToggle.interactable = toggleValue;
+        KeyCode keyBinding = currentKeyboardBindingState[keyAction];
+
+        var newKeybindingBar = Instantiate<GameObject>(_bluePrintForKeybindingBar, transform);
+        var data = newKeybindingBar.GetComponent<KeybindingBarComponentAccessor>();
+        newKeybindingBar.name = $"KeyboardBinding{lableText.Replace(" ", "")}";
+        data.KeyLabelText.text = lableText;
+        createdKeyBindings.Add(keyAction, newKeybindingBar);
+
+        Button newButton = data.KeybindingButton;
+        var keyStrokeListener = newButton.GetComponent<ListeningToKeyStrokeOnClick>();
+        keyStrokeListener.CurrentKeyCode = keyBinding;
       }
     }
   }

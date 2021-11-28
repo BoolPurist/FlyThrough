@@ -12,6 +12,7 @@ namespace FlyThrough
     public TextMeshProUGUI KeyLabelText;    
     public TextMeshProUGUI KeybindingText;
     public Button KeybindingButton;
+    public ListeningToKeyStrokeOnClick KeyListener;
   }
 
 }

@@ -15,7 +15,6 @@ public class ListeningToKeyStrokeOnClick : MonoBehaviour, IPointerDownHandler
   [SerializeField]
   private TextMeshProUGUI _textForKeybinding;
   
-
   [SerializeField, Min(0)]
   private float AlternateDuration = 1f;
 
@@ -29,7 +28,6 @@ public class ListeningToKeyStrokeOnClick : MonoBehaviour, IPointerDownHandler
 
   public event Action<ListeningToKeyStrokeOnClick> OnStopListeningForKeystroke;
 
-
   private Image _buttonImage;
 
   private string _keyBindingSymbol;
@@ -40,11 +38,15 @@ public class ListeningToKeyStrokeOnClick : MonoBehaviour, IPointerDownHandler
 
   private KeyCode _currentKeyCode = KeyCode.None;
 
-  public KeyCode CurrentKeyCode => _currentKeyCode;
-
-  private void Awake()
-  {    
-    _keyBindingSymbol = _textForKeybinding.text;    
+  public KeyCode CurrentKeyCode
+  {
+    get => _currentKeyCode;
+    set
+    {
+      _currentKeyCode = value;
+      _textForKeybinding.text = _currentKeyCode.ToString();
+      _keyBindingSymbol = _textForKeybinding.text;
+    }
   }
   
   private void Start()
@@ -56,6 +58,7 @@ public class ListeningToKeyStrokeOnClick : MonoBehaviour, IPointerDownHandler
   {
     _isListeningForKeyStroke = true;
     _button.interactable = false;
+    _keyBindingSymbol = _textForKeybinding.text;
     _textForKeybinding.text = ListiningKeyBindingSymbol;
     _alternatingFadingRoutine = StartCoroutine(AlternateBetweenFaded());
   }
@@ -115,8 +118,7 @@ public class ListeningToKeyStrokeOnClick : MonoBehaviour, IPointerDownHandler
     Event currentEvent = Event.current;
     if (currentEvent.isKey)
     {             
-      _currentKeyCode = currentEvent.keyCode;
-      _keyBindingSymbol = _currentKeyCode.ToString();
+      CurrentKeyCode = currentEvent.keyCode;
       return true;
     }
 

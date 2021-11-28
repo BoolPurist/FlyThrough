@@ -4,101 +4,53 @@ using UnityEngine;
 
 namespace FlyThrough
 {
-  [RequireComponent(typeof(BuilderForKeybindingbars))]
-  [RequireComponent(typeof(ActivateObjectsAndDeactivateOthers))]
+  
+  [RequireComponent(typeof(HandlingKeyStrokeAssignment))]
   public class HandlerForKeyBindingApplying : MonoBehaviour
   {
 
-    private BuilderForKeybindingbars _keyBindingProvider;
-    private ActivateObjectsAndDeactivateOthers _objectToggler;
+    private HandlingKeyStrokeAssignment _keyBindingProvider;
+    [SerializeField]
+    private SwitchToOtherMenu _menuSwitcher;
     
     private void Start()
     {
-      _keyBindingProvider = GetComponent<BuilderForKeybindingbars>();
-      _objectToggler = GetComponent<ActivateObjectsAndDeactivateOthers>();
+      _keyBindingProvider = GetComponent<HandlingKeyStrokeAssignment>();
     }
 
     public void OnCancleNewSettings()
     {
       KeyBoardBindingState keyBindingsBeforeCancleApply = SGameInputKeyboard.Instance.CloneBindingKeyboardState();
-      ResetOneKeyBinding(KeyBindinAction.MoveUp, keyBindingsBeforeCancleApply.MoveUp);
-      ResetOneKeyBinding(KeyBindinAction.MoveDown, keyBindingsBeforeCancleApply.MoveDown);
-      ResetOneKeyBinding(KeyBindinAction.MoveLeft, keyBindingsBeforeCancleApply.MoveLeft);
-      ResetOneKeyBinding(KeyBindinAction.MoveRight, keyBindingsBeforeCancleApply.MoveRight);
 
-      ResetOneKeyBinding(KeyBindinAction.RotateLeft, keyBindingsBeforeCancleApply.RotateLeft);
-      ResetOneKeyBinding(KeyBindinAction.RotateRight, keyBindingsBeforeCancleApply.RotateRight);
-      ResetOneKeyBinding(KeyBindinAction.ScaleUp, keyBindingsBeforeCancleApply.ScaleUp);
-      ResetOneKeyBinding(KeyBindinAction.ScaleDown, keyBindingsBeforeCancleApply.ScaleDown);
-
-      _objectToggler.ToggleObjects();
-
-      void ResetOneKeyBinding(in KeyBindinAction action, in KeyCode keyBeforeCancle)
+      foreach (KeyBindinAction action in KeyBoardBindingState.AllPlayerAction)
       {
-        var keyBinding = _keyBindingProvider[action].GetComponent<KeybindingBarComponentAccessor>();
-        keyBinding.KeybindingText.text = keyBeforeCancle.ToString();
+        ResetOneKeyBinding(action);
+      }
+
+      _menuSwitcher.ToggleObjects();
+
+      void ResetOneKeyBinding(in KeyBindinAction action)
+      {        
+        _keyBindingProvider[action].KeybindingText.text = keyBindingsBeforeCancleApply[action].ToString();
       }
     }
 
     public void OnApplyNewSettings()
     {
       KeyBoardBindingState keyBindingsBeforeCancleApply = SGameInputKeyboard.Instance.CloneBindingKeyboardState();
-     
-      SetOneKeyBinding(KeyBindinAction.MoveUp);
-      SetOneKeyBinding(KeyBindinAction.MoveDown);
-      SetOneKeyBinding(KeyBindinAction.MoveLeft);
-      SetOneKeyBinding(KeyBindinAction.MoveRight);
 
-      SetOneKeyBinding(KeyBindinAction.ScaleUp);
-      SetOneKeyBinding(KeyBindinAction.ScaleDown);
-      SetOneKeyBinding(KeyBindinAction.RotateLeft);
-      SetOneKeyBinding(KeyBindinAction.RotateRight);
+      foreach (KeyBindinAction action in KeyBoardBindingState.AllPlayerAction)
+      {
+        SetKeyBinding(action);
+      }
 
       SGameInputKeyboard.Instance.SetBindingKeyboardState(keyBindingsBeforeCancleApply);
 
-      _objectToggler.ToggleObjects();
+      _menuSwitcher.ToggleObjects();
 
-      void SetOneKeyBinding(in KeyBindinAction action)
-      {
-        var keyBindingListener = _keyBindingProvider[action].GetComponentInChildren<ListeningToKeyStrokeOnClick>();
-        KeyCode newKeyCode = keyBindingListener.CurrentKeyCode;
+      KeyCode SetKeyBinding(KeyBindinAction action) 
+        => keyBindingsBeforeCancleApply[action] = _keyBindingProvider[action].KeyListener.CurrentKeyCode;
 
-        if (newKeyCode != KeyCode.None)
-        {
-          switch (action)
-          {
-            case KeyBindinAction.MoveUp:
-              keyBindingsBeforeCancleApply.MoveUp = newKeyCode;
-              break;
-            case KeyBindinAction.MoveDown:
-              keyBindingsBeforeCancleApply.MoveDown = newKeyCode;
-              break;
-            case KeyBindinAction.MoveLeft:
-              keyBindingsBeforeCancleApply.MoveLeft= newKeyCode;
-              break;
-            case KeyBindinAction.MoveRight:
-              keyBindingsBeforeCancleApply.MoveRight = newKeyCode;
-              break;
-            case KeyBindinAction.ScaleUp:
-              keyBindingsBeforeCancleApply.ScaleUp = newKeyCode;
-              break;
-            case KeyBindinAction.ScaleDown:
-              keyBindingsBeforeCancleApply.ScaleDown = newKeyCode;
-              break;
-            case KeyBindinAction.RotateLeft:
-              keyBindingsBeforeCancleApply.RotateLeft = newKeyCode;
-              break;
-            case KeyBindinAction.RotateRight:
-              keyBindingsBeforeCancleApply.RotateRight = newKeyCode;
-              break;
-            default:
-              Debug.LogWarning($"For enum {nameof(KeyBindinAction)} the value {action} is not accounted for !");
-              break;
-
-          }
-        }
-
-      }
     }
     
 

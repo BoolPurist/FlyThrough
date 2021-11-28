@@ -11,12 +11,12 @@ namespace FlyThrough
     [SerializeField]
     private GameObject[] ObjectesToDeactivate;
 
-    public void ToggleObjects()
+    public static void ToggleObjects_Static(IList<GameObject> objectesToActivate, IList<GameObject> objectsToDeactivate)
     {
-      ToggleFromBool(ObjectesToActivate, true);
-      ToggleFromBool(ObjectesToDeactivate, false);
+      ToggleFromBool(objectesToActivate, true);
+      ToggleFromBool(objectsToDeactivate, false);
 
-      void ToggleFromBool(GameObject[] objectsToToggle,bool toggleValue)
+      void ToggleFromBool(IList<GameObject> objectsToToggle, bool toggleValue)
       {
         foreach (GameObject objectToToggle in objectsToToggle)
         {
@@ -24,5 +24,7 @@ namespace FlyThrough
         }
       }
     }
+
+    public void ToggleObjects() => ToggleObjects_Static(ObjectesToActivate, ObjectesToDeactivate);
   }
 }
