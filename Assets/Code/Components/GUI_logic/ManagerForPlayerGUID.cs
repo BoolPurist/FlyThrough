@@ -13,6 +13,11 @@ namespace FlyThrough
     [SerializeField]
     private TextMeshProUGUI _textForObstaclePassedByPlayer;
 
+    [SerializeField]
+    private GameObject _gameOverPanel;
+    [SerializeField]
+    private GameObject _victoryPanel;
+
     private void OnEnable() => StartListening();
     private void OnDestroy() => StopListening();
     private void OnDisable() => StopListening();
@@ -26,6 +31,10 @@ namespace FlyThrough
     {
       _textForObstaclePassedByPlayer.text = newScoreState.ToString();
     }
+
+    public void ReactToGameOver() => _gameOverPanel.SetActive(true);
+
+    public void ReactToVictory() => _victoryPanel.SetActive(true);
   }
 }
   

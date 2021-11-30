@@ -15,8 +15,6 @@ namespace FlyThrough
     [SerializeField]
     private bool _ignoreDeath = false;
     [SerializeField]
-    private float _timeAfterDeath = 2f;
-    [SerializeField]
     private UnityEvent OnPlayerDeath;    
     [SerializeField]
     private UnityEvent OnPlayerVictory;
@@ -36,28 +34,22 @@ namespace FlyThrough
     {
       if (playerHasWon)
       {
+        StopMoving();
         OnPlayerVictory?.Invoke();
-        _pusher.enabled = false;
-
-        _movement.StopMovement();
-        _movement.enabled = false;
-
-        StartCoroutine(ReloadScene());
       }
       else if (!_ignoreDeath)
       {
-        _pusher.InitLastMovesToGameOver();
-        _movement.enabled = false;
-        OnPlayerDeath?.Invoke();
-
-        StartCoroutine(ReloadScene());
+        StopMoving();
+        OnPlayerDeath?.Invoke();        
       }
     }
 
-    private IEnumerator ReloadScene()
+    private void StopMoving()
     {
-      yield return new WaitForSeconds(_timeAfterDeath);
-      SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+      _movement.enabled = false;
+      _pusher.enabled = false;
+      _movement.StopMovement();
     }
+
   }
 }

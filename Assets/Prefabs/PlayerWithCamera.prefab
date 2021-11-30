@@ -123,12 +123,12 @@ PrefabInstance:
         type: 3}
       propertyPath: OnPlayerDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 5960282817275053719}
+      objectReference: {fileID: 0}
     - target: {fileID: 3339347999162756477, guid: 309c78f59bd8db7418c9b453dd9187d8,
         type: 3}
       propertyPath: OnPlayerVictory.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 5960282817275053719}
+      objectReference: {fileID: 0}
     - target: {fileID: 3339347999162756477, guid: 309c78f59bd8db7418c9b453dd9187d8,
         type: 3}
       propertyPath: OnPlayerDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -157,6 +157,10 @@ PrefabInstance:
     - target: {fileID: 268916416, guid: 454f35d6ac994114bbbcb1050d4710cc, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895009171, guid: 454f35d6ac994114bbbcb1050d4710cc, type: 3}
+      propertyPath: m_Name
+      value: Victory Panel
       objectReference: {fileID: 0}
     - target: {fileID: 4708958543320039565, guid: 454f35d6ac994114bbbcb1050d4710cc,
         type: 3}
@@ -266,15 +270,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5960282817006669907}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5960282817275053719 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 268916420, guid: 454f35d6ac994114bbbcb1050d4710cc,
-    type: 3}
-  m_PrefabInstance: {fileID: 5960282817006669907}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 092250e43a701694ebdcfcc9f2dc168b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
