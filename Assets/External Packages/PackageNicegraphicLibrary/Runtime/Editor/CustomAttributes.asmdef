@@ -1,0 +1,18 @@
+{
+    "name": "CustomAttributes",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bbb2dbc01a9b3614c8beb4513f3da43f"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
