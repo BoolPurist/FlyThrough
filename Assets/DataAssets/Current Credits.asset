@@ -15,7 +15,23 @@ MonoBehaviour:
   Chapters:
   - Title: Programming
     Contributors:
-    - BoolPurist
+    - AuthoName: BoolPurist
+      AssetName: Game Logic
+      Link: https://github.com/BoolPurist/FlyThrough
+      Licence: MIT
   - Title: Graphics
     Contributors:
-    - BoolPurist
+    - AuthoName: BoolPurist
+      AssetName: All graphical Assets
+      Link: https://github.com/BoolPurist/FlyThrough
+      Licence: MIT
+  - Title: Sound Effects
+    Contributors:
+    - AuthoName: spookymodem
+      AssetName: Hitting Wall.wav
+      Link: https://opengameart.org/content/wall-impact
+      Licence: CC BY 3.0
+    - AuthoName: indenpendent.nu (qubodup)
+      AssetName: buttonSound.mp3
+      Link: https://opengameart.org/content/16-button-clicks
+      Licence: CC0

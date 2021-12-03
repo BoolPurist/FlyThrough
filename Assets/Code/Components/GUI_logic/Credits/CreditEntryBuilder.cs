@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 namespace FlyThrough
@@ -12,6 +14,10 @@ namespace FlyThrough
 
     [SerializeField]
     private GameObject CreditEntryBluePrint;
+    [SerializeField, Min(0)]
+    private float SpaceBetweenChapters = 0f;
+    [SerializeField]
+    private GameObject Container;
 
 
     [SerializeField]
@@ -20,19 +26,32 @@ namespace FlyThrough
     private void Start()
     {
       RemoveChildren();
+      var mainVerticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
+      mainVerticalLayoutGroup.spacing = SpaceBetweenChapters;
 
       foreach (Chapter chapterToBuild in RowsToBuild.GetChapters())
       {
-        GameObject newCreditHeadline = Instantiate<GameObject>(CreditHeadLineBlueprint, transform);
-        newCreditHeadline.GetComponent<TextMeshProUGUI>().text = chapterToBuild.TitleOfEntries;
+        string chapterTitle = chapterToBuild.TitleOfEntries;
+        GameObject container = Instantiate<GameObject>(Container);        
 
-        foreach (string entry in chapterToBuild.GetEntries())
+        container.transform.SetParent(transform);
+        
+        GameObject newCreditHeadline = Instantiate<GameObject>(CreditHeadLineBlueprint, transform);
+        newCreditHeadline.GetComponent<TextMeshProUGUI>().text = chapterTitle;
+        newCreditHeadline.transform.SetParent(container.transform);
+
+        foreach (Contribution entry in chapterToBuild.GetEntries())
         {
           GameObject newEntry = Instantiate<GameObject>(CreditEntryBluePrint, transform);
-          newEntry.GetComponent<TextMeshProUGUI>().text = entry;
+          string contributionLine = $"\"{entry.GetAssetName()}\" by {entry.GetAuthorName()}\n" +
+            $"licensed ({entry.GetAuthorLicence()}): {entry.GetAuthorLink()}";
+          newEntry.GetComponent<TextMeshProUGUI>().text = contributionLine;
+          newEntry.transform.SetParent(container.transform);
         }
       }
     }
+
+    
 
     private void RemoveChildren()
     {

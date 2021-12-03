@@ -25,18 +25,36 @@ namespace FlyThrough
     [SerializeField]
     private string Title;
     [SerializeField]
-    private List<string> Contributors;
+    private List<Contribution> Contributors;
 
 
     public string TitleOfEntries => Title;
 
-    public IEnumerable<string> GetEntries()
+    public IEnumerable<Contribution> GetEntries()
     {
-      foreach (string entry in Contributors)
+      foreach (Contribution entry in Contributors)
       {
         yield return entry;
       }
     }
+  }
+
+  [System.Serializable]
+  public class Contribution
+  {
+    [SerializeField]
+    private string AuthoName;
+    [SerializeField]
+    private string AssetName;
+    [SerializeField]
+    private string Link;
+    [SerializeField]
+    private string Licence;
+
+    public string GetAuthorName() => AuthoName;
+    public string GetAssetName() => AssetName;
+    public string GetAuthorLink() => Link;
+    public string GetAuthorLicence() => Licence;
   }
 
 }
