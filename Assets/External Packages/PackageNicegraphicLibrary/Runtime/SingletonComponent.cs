@@ -27,7 +27,7 @@ namespace NiceGraphicLibrary
         {
           instance = FindObjectOfType<TComponent>();
           if (instance == null)
-          {            
+          {
             GameObject obj = new GameObject();
             obj.name = $"(Singleton) {typeof(TComponent).Name}";
             instance = obj.AddComponent<TComponent>();
@@ -66,9 +66,7 @@ namespace NiceGraphicLibrary
             $"Object with duplicate component has the name [{gameObject.name}]"
             );
         }
-        Destroy(this);
-        
-        
+        Destroy(this);                
       }
     }
   }

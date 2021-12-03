@@ -13,6 +13,7 @@ namespace FlyThrough
   public class EndIt : MonoBehaviour
   {
     [SerializeField]
+
     private bool _ignoreDeath = false;
     [SerializeField]
     private UnityEvent OnPlayerDeath;    
