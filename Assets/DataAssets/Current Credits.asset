@@ -28,10 +28,14 @@ MonoBehaviour:
   - Title: Sound Effects
     Contributors:
     - AuthoName: spookymodem
-      AssetName: Hitting Wall.wav
+      AssetName: Hitting Wall
       Link: https://opengameart.org/content/wall-impact
       Licence: CC BY 3.0
     - AuthoName: indenpendent.nu (qubodup)
-      AssetName: buttonSound.mp3
+      AssetName: Button Sound
       Link: https://opengameart.org/content/16-button-clicks
       Licence: CC0
+    - AuthoName: NenadSimic
+      AssetName: Menu Selection Click
+      Link: https://opengameart.org/content/menu-selection-click
+      Licence: CC-BY 3.0

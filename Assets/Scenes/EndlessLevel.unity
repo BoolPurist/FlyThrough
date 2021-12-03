@@ -2485,6 +2485,11 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 1090956850}
+    - target: {fileID: 6626139177869575590, guid: 9e240e1c46e8a55499bd43991585229f,
+        type: 3}
+      propertyPath: _noObstaclePattern
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6626139177869575591, guid: 9e240e1c46e8a55499bd43991585229f,
         type: 3}
       propertyPath: m_Name

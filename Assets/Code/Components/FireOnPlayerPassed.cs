@@ -14,6 +14,7 @@ namespace FlyThrough
     {
       if (other.gameObject.CompareTag("Player"))
       {
+        SAudioCollectionPlayer.Instance.PlayPassThrough();
         OnPlayerHasPassed?.Invoke();
       }
     }

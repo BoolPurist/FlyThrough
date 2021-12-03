@@ -44,7 +44,7 @@ namespace FlyThrough
         {
           GameObject newEntry = Instantiate<GameObject>(CreditEntryBluePrint, transform);
           string contributionLine = $"\"{entry.GetAssetName()}\" by {entry.GetAuthorName()}\n" +
-            $"licensed ({entry.GetAuthorLicence()}): {entry.GetAuthorLink()}";
+            $"licensed ({entry.GetAuthorLicence()})\n{entry.GetAuthorLink()}";
           newEntry.GetComponent<TextMeshProUGUI>().text = contributionLine;
           newEntry.transform.SetParent(container.transform);
         }

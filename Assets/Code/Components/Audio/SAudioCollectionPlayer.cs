@@ -10,8 +10,14 @@ namespace FlyThrough
 
     [SerializeField]
     private AudioSource ButtonClickSound;
-   
+    [SerializeField]
+    private AudioSource HittingWall;
+    [SerializeField]
+    private AudioSource PassThrough;
+
     public void PlayButtonSound() => ButtonClickSound.Play();
+    public void PlayHitWallSound() => HittingWall.Play();
+    public void PlayPassThrough() => PassThrough.Play();
 
   }
 

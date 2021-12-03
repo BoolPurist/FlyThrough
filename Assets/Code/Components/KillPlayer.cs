@@ -13,6 +13,7 @@ namespace FlyThrough
       
       if (collidedWithPlayer)
       {
+        SAudioCollectionPlayer.Instance.PlayHitWallSound();
         player.GetComponent<EndIt>().InitEndGame();
       }
     }    
