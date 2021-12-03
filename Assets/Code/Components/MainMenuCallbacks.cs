@@ -8,11 +8,11 @@ namespace FlyThrough
 {
   public class MainMenuCallbacks : MonoBehaviour
   {
-    [SerializeField]
-    private string NameOfStartLevel = "EndlessLevel";
-
+    
     public void EndGame() => Application.Quit();
 
-    public void StartGame() => SceneManager.LoadScene(NameOfStartLevel);
+    public void StartGame() => SceneManager.LoadScene(SceneNames.START_LEVEL);
+
+    public void GoToCredits() => SceneManager.LoadScene(SceneNames.CREDIT_LEVEL);
   }
 }

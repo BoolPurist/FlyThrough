@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndlessLevel.unity
     guid: 6da0e77257190d94d8f1ffc78c4c7f3a
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 06cfe5967b85ea444aad4727299165df
   m_configObjects: {}

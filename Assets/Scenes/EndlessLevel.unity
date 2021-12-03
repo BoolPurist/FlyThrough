@@ -1021,7 +1021,7 @@ PrefabInstance:
     - target: {fileID: 5969306097134944306, guid: 0ea9a557bdb23ff42860e9ff25d44d65,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 400
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 5969306097134944306, guid: 0ea9a557bdb23ff42860e9ff25d44d65,
         type: 3}
@@ -1087,6 +1087,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6355619247137282715, guid: 0ea9a557bdb23ff42860e9ff25d44d65,
+        type: 3}
+      propertyPath: m_text
+      value: Game Over :(
       objectReference: {fileID: 0}
     - target: {fileID: 6355619247137282715, guid: 0ea9a557bdb23ff42860e9ff25d44d65,
         type: 3}
@@ -4521,9 +4526,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
         type: 3}
+      propertyPath: OnPlayerDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
+      propertyPath: OnPlayerVictory.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
+      propertyPath: OnPlayerDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
       propertyPath: OnPlayerDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 429088957}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
+      propertyPath: OnPlayerDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1205355792}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
+      propertyPath: OnPlayerVictory.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
         type: 3}
       propertyPath: OnPlayerVictory.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4531,8 +4561,28 @@ PrefabInstance:
       objectReference: {fileID: 429088957}
     - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
         type: 3}
+      propertyPath: OnPlayerVictory.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1205355792}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
+      propertyPath: OnPlayerDeath.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
       propertyPath: OnPlayerDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ReactToGameOver
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
+      propertyPath: OnPlayerDeath.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
+      propertyPath: OnPlayerVictory.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
         type: 3}
@@ -4541,13 +4591,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
         type: 3}
+      propertyPath: OnPlayerVictory.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
       propertyPath: OnPlayerDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: FlyThrough.ManagerForPlayerGUID, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
         type: 3}
+      propertyPath: OnPlayerDeath.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
       propertyPath: OnPlayerVictory.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: FlyThrough.ManagerForPlayerGUID, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
+      propertyPath: OnPlayerVictory.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
+      propertyPath: OnPlayerDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447592894365284786, guid: 209ee37763788e345a1d12eacba625bd,
+        type: 3}
+      propertyPath: OnPlayerVictory.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4447592894365284789, guid: 209ee37763788e345a1d12eacba625bd,
         type: 3}
