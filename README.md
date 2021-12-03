@@ -10,3 +10,6 @@ You as a cube have to fly through holes in walls.
 
 * NiceGraphicUnityCodeLibrary from [Link](https://github.com/BoolPurist/NiceGraphicUnityCodeLibrary)
 
+## Credits
+
+Credits can be found [here](./CREDITS.md) 
